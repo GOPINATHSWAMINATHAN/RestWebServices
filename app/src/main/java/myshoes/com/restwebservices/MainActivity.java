@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     Button runCode;
 
     private static final String JSON_URL = "http://560057.youcanlearnit.net/services/json/itemsfeed.php";
+    
+    //Getting response back from the intent service using these following steps upto line no 44.
     BroadcastReceiver mBroadCastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -53,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         if (networkOk) {
             Toast.makeText(getApplicationContext(), "COnnected with network", Toast.LENGTH_LONG).show();
         }
-
+//This line registers the LocalBroadcastManager and get the data from it by calling the intent name(MYService.MY_SERVICE_MESSAGE).
         LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(mBroadCastReceiver, new IntentFilter(MyService.MY_SERVICE_MESSAGE));
 
 
