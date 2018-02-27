@@ -35,11 +35,15 @@ public class MyService extends IntentService {
         super("Learning Services");
     }
 
+    
+    //This onHandleIntent(@Nullable Intent intent) method has been overrided from IntentService.
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         Uri uri = intent.getData();
 
+        
         try {
+            //Called the downloadUrl method from HttpHelper class to get the response from it.
             response = HttpHelper.downloadUrl(uri.toString());
         } catch (IOException e) {
             e.printStackTrace();
@@ -47,12 +51,17 @@ public class MyService extends IntentService {
 
         Log.i(TAG, "onHandleIntent: " + uri.toString());
 
+        
+        //calling gson object.
         Gson gson = new Gson();
+        //Getting the value from the response and bind it with dataitems object of DataItem class.
         DataItem[] dataItems = gson.fromJson(response, DataItem[].class);
+        
+        //Below steps to send response to the BroadcastReceiver from the IntentService.
         Intent messageIntent = new Intent(MY_SERVICE_MESSAGE);
-
         messageIntent.putExtra(MY_SERVICE_PAYLOAD, dataItems);
         LocalBroadcastManager manager = LocalBroadcastManager.getInstance(getApplicationContext());
+        //It will send the response to the corresponding parent class which has called this class.
         manager.sendBroadcast(messageIntent);
 
 
