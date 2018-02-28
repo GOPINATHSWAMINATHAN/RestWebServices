@@ -16,6 +16,9 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import java.util.Arrays;
+import java.util.List;
+
 import myshoes.com.restwebservices.model.DataItem;
 import myshoes.com.restwebservices.utils.NetworkHelper;
 
@@ -25,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     private boolean networkOk;
     TextView output;
     Button runCode;
+
+    List<DataItem> mItemList;
 
     private static final String JSON_URL = "http://560057.youcanlearnit.net/services/json/itemsfeed.php";
 
@@ -37,10 +42,14 @@ public class MainActivity extends AppCompatActivity {
 
 //            String message = intent.getStringExtra(MyService.MY_SERVICE_PAYLOAD);
             DataItem[] dataItems = (DataItem[]) intent.getParcelableArrayExtra(MyService.MY_SERVICE_PAYLOAD);
-            for (DataItem items : dataItems) {
-                output.append(items.getItemName() + "\n");
-            }
+//            for (DataItem items : dataItems) {
+//                output.append(items.getItemName() + "\n");
+//            }
 
+            //Changed from array to arraylist.
+            mItemList = Arrays.asList(dataItems);
+            for (int i = 0; i < mItemList.size(); i++)
+                output.append(mItemList.get(i).getItemName() + "\n");
             // Log.e("SERVICE MESSAGE", "" + message);
         }
     };
