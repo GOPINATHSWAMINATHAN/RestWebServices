@@ -14,8 +14,8 @@ public class DataItem implements Parcelable {
     private String itemName;
     private String category;
     private String description;
-    private String sort;
-    private String price;
+    private int sort;
+    private double price;
     private String image;
 
     public String getItemName() {
@@ -42,19 +42,19 @@ public class DataItem implements Parcelable {
         this.description = description;
     }
 
-    public String getSort() {
+    public int getSort() {
         return sort;
     }
 
-    public void setSort(String sort) {
+    public void setSort(int sort) {
         this.sort = sort;
     }
 
-    public String getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -66,6 +66,7 @@ public class DataItem implements Parcelable {
         this.image = image;
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -76,8 +77,8 @@ public class DataItem implements Parcelable {
         dest.writeString(this.itemName);
         dest.writeString(this.category);
         dest.writeString(this.description);
-        dest.writeString(this.sort);
-        dest.writeString(this.price);
+        dest.writeInt(this.sort);
+        dest.writeDouble(this.price);
         dest.writeString(this.image);
     }
 
@@ -88,8 +89,8 @@ public class DataItem implements Parcelable {
         this.itemName = in.readString();
         this.category = in.readString();
         this.description = in.readString();
-        this.sort = in.readString();
-        this.price = in.readString();
+        this.sort = in.readInt();
+        this.price = in.readDouble();
         this.image = in.readString();
     }
 

@@ -13,6 +13,7 @@ import java.io.IOException;
 
 import myshoes.com.restwebservices.model.DataItem;
 import myshoes.com.restwebservices.utils.HttpHelper;
+import myshoes.com.restwebservices.utils.MyXMLParser;
 
 /**
  * Created by gopinath on 27/02/18.
@@ -51,12 +52,18 @@ public class MyService extends IntentService {
 
         Log.i(TAG, "onHandleIntent: " + uri.toString());
 
-        
-        //calling gson object.
-        Gson gson = new Gson();
-        //Getting the value from the response and bind it with dataitems object of DataItem class.
-        DataItem[] dataItems = gson.fromJson(response, DataItem[].class);
-        
+
+
+
+//        //calling gson object.
+//        Gson gson = new Gson();
+//        //Getting the value from the response and bind it with dataitems object of DataItem class.
+//        DataItem[] dataItems = gson.fromJson(response, DataItem[].class);
+
+
+
+        DataItem[] dataItems= MyXMLParser.parseFeed(response);
+
         //Below steps to send response to the BroadcastReceiver from the IntentService.
         Intent messageIntent = new Intent(MY_SERVICE_MESSAGE);
         messageIntent.putExtra(MY_SERVICE_PAYLOAD, dataItems);

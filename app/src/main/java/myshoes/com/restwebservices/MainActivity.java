@@ -27,7 +27,9 @@ public class MainActivity extends AppCompatActivity {
     Button runCode;
 
     private static final String JSON_URL = "http://560057.youcanlearnit.net/services/json/itemsfeed.php";
-    
+
+
+    private static final String XML_URL = "http://560057.youcanlearnit.net/services/xml/itemsfeed.php";
     //Getting response back from the intent service using these following steps upto line no 44.
     BroadcastReceiver mBroadCastReceiver = new BroadcastReceiver() {
         @Override
@@ -71,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
     void callService() {
         if (networkOk) {
             Intent i = new Intent(this, MyService.class);
-            i.setData(Uri.parse(JSON_URL));
+            i.setData(Uri.parse(XML_URL));
             startService(i);
         }
     }
