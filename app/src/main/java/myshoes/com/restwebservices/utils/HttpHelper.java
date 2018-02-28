@@ -1,4 +1,7 @@
 package myshoes.com.restwebservices.utils;
+
+import android.util.Base64;
+
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -18,14 +21,20 @@ public class HttpHelper {
      * @return
      * @throws IOException
      */
-    public static String downloadUrl(String address) throws IOException {
+    public static String downloadUrl(String address, String username, String password) throws IOException {
 
+        //Converting username and password to authenticate with HTTP URL connection.
+        byte[] loginBytes = (username + ":" + password).getBytes();
+        StringBuilder sb = new StringBuilder().append("Basic ").append(Base64.encodeToString(loginBytes, Base64.DEFAULT));
         InputStream is = null;
         try {
 
             URL url = new URL(address);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setReadTimeout(10000);
+            //If the Http Url needs authentication , we need send username and password.
+            //Below line sends the username and password which has encoded using Base64 class in StringBuilder.
+            conn.addRequestProperty("Authorization", sb.toString());
             conn.setConnectTimeout(15000);
             conn.setRequestMethod("GET");
             conn.setDoInput(true);

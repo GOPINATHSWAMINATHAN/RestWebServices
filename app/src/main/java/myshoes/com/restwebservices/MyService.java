@@ -36,23 +36,21 @@ public class MyService extends IntentService {
         super("Learning Services");
     }
 
-    
+
     //This onHandleIntent(@Nullable Intent intent) method has been overrided from IntentService.
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         Uri uri = intent.getData();
 
-        
+
         try {
             //Called the downloadUrl method from HttpHelper class to get the response from it.
-            response = HttpHelper.downloadUrl(uri.toString());
+            response = HttpHelper.downloadUrl(uri.toString(), "nadias", "NadiasPassword");
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         Log.i(TAG, "onHandleIntent: " + uri.toString());
-
-
 
 
 //        //calling gson object.
@@ -61,8 +59,7 @@ public class MyService extends IntentService {
 //        DataItem[] dataItems = gson.fromJson(response, DataItem[].class);
 
 
-
-        DataItem[] dataItems= MyXMLParser.parseFeed(response);
+        DataItem[] dataItems = MyXMLParser.parseFeed(response);
 
         //Below steps to send response to the BroadcastReceiver from the IntentService.
         Intent messageIntent = new Intent(MY_SERVICE_MESSAGE);
