@@ -70,11 +70,11 @@ public class MainActivity extends AppCompatActivity {
             Note:
             To bind the bitmap data into imageview without using Picasso or glide. Follow below lines code.
 
+mBitmaps-->It is hashmap. (Refer, MyService.class)
 
-            String imageFile=item.getImage();
-            InputStream inputStream=mContext.getAssets().open(imageFile);
-            Drawable d=Drawable.creaeFromStream(inputStream,null);
-            holder.imageview.setImageDrawable(d);
+
+        Bitmap bitmap=mBitmaps.get(item.getItemName());
+        holder.imageView.setImageBitmap(bitmap);
 
 
              */

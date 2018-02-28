@@ -75,6 +75,7 @@ public class MyService extends IntentService {
             String imageUrl = IMAGE_URL + item.getImage();
             InputStream in = null;
             try {
+                //To convert the image url to bitmap objects.
                 in = (InputStream) new URL(imageUrl).getContent();
                 Bitmap bitmap = BitmapFactory.decodeStream(in);
                 mBitmaps.put(item.getItemName(), bitmap);
