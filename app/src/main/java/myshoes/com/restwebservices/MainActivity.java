@@ -4,6 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
@@ -16,8 +18,13 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import myshoes.com.restwebservices.model.DataItem;
 import myshoes.com.restwebservices.utils.NetworkHelper;
@@ -31,8 +38,11 @@ public class MainActivity extends AppCompatActivity {
 
     List<DataItem> mItemList;
 
+    Map<String, Bitmap> mBitmaps = new HashMap<>();
+
     private static final String JSON_URL = "http://560057.youcanlearnit.net/services/json/itemsfeed.php";
 
+    private static final String IMAGE_URL = "http://560057.youcanlearnit.net/services/images/";
 
     private static final String XML_URL = "http://560057.youcanlearnit.net/services/xml/itemsfeed.php";
     //Getting response back from the intent service using these following steps upto line no 44.
@@ -48,8 +58,27 @@ public class MainActivity extends AppCompatActivity {
 
             //Changed from array to arraylist.
             mItemList = Arrays.asList(dataItems);
-            for (int i = 0; i < mItemList.size(); i++)
+            for (int i = 0; i < mItemList.size(); i++) {
                 output.append(mItemList.get(i).getItemName() + "\n");
+            }
+
+
+            /*
+            To retrieve the  images from server, we have to use Asynchronous thread.
+
+
+            Note:
+            To bind the bitmap data into imageview without using Picasso or glide. Follow below lines code.
+
+
+            String imageFile=item.getImage();
+            InputStream inputStream=mContext.getAssets().open(imageFile);
+            Drawable d=Drawable.creaeFromStream(inputStream,null);
+            holder.imageview.setImageDrawable(d);
+
+
+             */
+
             // Log.e("SERVICE MESSAGE", "" + message);
         }
     };
@@ -92,4 +121,8 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(mBroadCastReceiver);
     }
+
+    //To retrieve Images
+
+
 }
